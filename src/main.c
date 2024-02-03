@@ -71,7 +71,13 @@ int main() {
                 if (collision_with == BOTTOM_WALL || collision_with == PIECE) {
                     // fixa a peça encaixando no fundo
                     board_place_piece(game->board, game->current_piece);
-                    board_clear_lines(game->board);
+                    int removed_lines = board_clear_lines(game->board);
+                    game_update_points(game, removed_lines);
+                    SDL_Log("Pontos: %d", game->points);
+                    game_check_level(game);
+                    SDL_Log("Level: %d", game->level);
+                    SDL_Log("Aceleracao: %d", acceleration);
+                    SDL_Log("Loop count control: %d", (int)(game->velocity / game->level / acceleration));
                     game->current_piece = game_create_current_piece(game);
                 }
                 loopCount = 0;

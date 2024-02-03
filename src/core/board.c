@@ -49,7 +49,14 @@ void board_place_piece(Board* board, Piece* piece) {
     piece_destroy(piece);
 }
 
-void board_clear_lines(Board* board) {
+/**
+ * @brief Limpa as linhas completas e retorna o total de linhas removidas
+ * 
+ * @param board 
+ * @return int 
+ */
+int board_clear_lines(Board* board) {
+    int total = 0;
     for (int i = board->height - 1; i >= 0; --i) {
         int count = 0;
         for (int j = 0; j < board->width; ++j) {
@@ -59,6 +66,7 @@ void board_clear_lines(Board* board) {
         }
 
         if (count == board->width) {
+            total++;
             // Linha completa, mova todas as linhas acima para baixo
             for (int k = i; k > 0; --k) {
                 for (int j = 0; j < board->width; ++j) {
@@ -75,6 +83,7 @@ void board_clear_lines(Board* board) {
             i++;
         }
     }
+    return total;
 }
 
 /**

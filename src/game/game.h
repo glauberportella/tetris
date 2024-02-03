@@ -42,6 +42,8 @@ void game_play_music(TetrisGame* game);
 void game_render(TetrisGame* game);
 Piece* game_create_current_piece(TetrisGame* game);
 PieceType game_next_piece_type(TetrisGame* game);
+void game_update_points(TetrisGame* game, int total_lines_removed);
+void game_check_level(TetrisGame* game);
 void destroy_game(TetrisGame* game);
 
 #endif

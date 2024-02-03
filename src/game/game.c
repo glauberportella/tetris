@@ -28,13 +28,13 @@ TetrisGame* create_game() {
 
     TetrisGame* game = (TetrisGame*)malloc(sizeof(TetrisGame));
 
-    game->music = Mix_LoadMUS("music/03-A-Type Music.mp3");
-    if (!game->music) {
-        SDL_Log("Erro ao carregar música: %s", Mix_GetError());
-    }
-    Mix_VolumeMusic(20);
+    // game->music = Mix_LoadMUS("music/01-Title.mp3");
+    // if (!game->music) {
+    //     SDL_Log("Erro ao carregar música: %s", Mix_GetError());
+    // }
+    // Mix_VolumeMusic(20);
 
-    game->velocity = 90;
+    game->velocity = 60;
     game->level = 1;
     game->points = 0;
     game->paused = 0;
@@ -64,24 +64,6 @@ TetrisGame* create_game() {
 
 void game_play_music(TetrisGame* game) {
     Mix_PlayMusic(game->music, 1);
-}
-
-void destroy_game(TetrisGame* game) {
-    // SDL destroy
-    Mix_FreeMusic(game->music);
-    Mix_CloseAudio();
-    Mix_Quit();
-    SDL_DestroyRenderer(game->renderer);
-    SDL_DestroyWindow(game->window);
-    SDL_Quit();
-    // destroy current piece
-    piece_destroy(game->current_piece);
-    // destroy board
-    board_destroy(game->board);
-    // destroy game
-    if (game != NULL) {
-        free(game);
-    }
 }
 
 PieceType game_next_piece_type(TetrisGame* game) {
@@ -142,5 +124,35 @@ void game_render(TetrisGame* game) {
                 SDL_RenderFillRect(game->renderer, &rect);
             }
         }
+    }
+}
+
+void game_update_points(TetrisGame* game, int total_lines_removed) {
+    game->points += total_lines_removed * 100;
+}
+
+void game_check_level(TetrisGame* game) {
+    int next_level = game->level;
+    if (game->points == game->level * 1000) {
+        next_level++;
+    }
+    game->level = next_level;
+}
+
+void destroy_game(TetrisGame* game) {
+    // SDL destroy
+    Mix_FreeMusic(game->music);
+    Mix_CloseAudio();
+    Mix_Quit();
+    SDL_DestroyRenderer(game->renderer);
+    SDL_DestroyWindow(game->window);
+    SDL_Quit();
+    // destroy current piece
+    piece_destroy(game->current_piece);
+    // destroy board
+    board_destroy(game->board);
+    // destroy game
+    if (game != NULL) {
+        free(game);
     }
 }

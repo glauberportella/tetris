@@ -17,7 +17,7 @@ Board* board_create(int w, int h);
 void board_init(Board* board);
 void board_add_piece(Board* board, Piece* piece);
 void board_place_piece(Board* board, Piece* piece);
-void board_clear_lines(Board* board);
+int board_clear_lines(Board* board);
 Collision collision(Board* board, int x, int y);
 void board_destroy(Board* board);
 
