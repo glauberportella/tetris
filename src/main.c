@@ -17,7 +17,6 @@
 int main() {
     TetrisGame* game = create_game();
     Uint32 frameStart, frameTime;
-    int pieceDownTime;
 
     if (game != NULL) {
         game_play_music(game);
