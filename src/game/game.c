@@ -28,11 +28,11 @@ TetrisGame* create_game() {
 
     TetrisGame* game = (TetrisGame*)malloc(sizeof(TetrisGame));
 
-    // game->music = Mix_LoadMUS("music/01-Title.mp3");
-    // if (!game->music) {
-    //     SDL_Log("Erro ao carregar música: %s", Mix_GetError());
-    // }
-    // Mix_VolumeMusic(20);
+    game->music = Mix_LoadMUS("music/03-A-Type Music.mp3");
+    if (!game->music) {
+        SDL_Log("Erro ao carregar música: %s", Mix_GetError());
+    }
+    Mix_VolumeMusic(20);
 
     game->velocity = 60;
     game->level = 1;
