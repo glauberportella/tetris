@@ -138,6 +138,24 @@ void game_check_level(TetrisGame* game) {
     game->level = next_level;
 }
 
+void game_fix_piece(TetrisGame* game) {
+    board_place_piece(game->board, game->current_piece);
+    int removed_lines = board_clear_lines(game->board);
+    game_update_points(game, removed_lines);
+    game_check_level(game);
+    game->current_piece = game_create_current_piece(game);
+}
+
+int game_is_over(TetrisGame* game) {
+    for (int y = 0; y < game->board->width; y++) {
+        SDL_Log("Test over: [%d, %d] = %d", 0, y, game->board->matrix[0][y]);
+        if (game->board->matrix[0][y] != 0) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void destroy_game(TetrisGame* game) {
     // SDL destroy
     Mix_FreeMusic(game->music);

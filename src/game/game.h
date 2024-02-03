@@ -44,6 +44,8 @@ Piece* game_create_current_piece(TetrisGame* game);
 PieceType game_next_piece_type(TetrisGame* game);
 void game_update_points(TetrisGame* game, int total_lines_removed);
 void game_check_level(TetrisGame* game);
+void game_fix_piece(TetrisGame* game);
+int game_is_over(TetrisGame* game);
 void destroy_game(TetrisGame* game);
 
 #endif
