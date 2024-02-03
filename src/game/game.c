@@ -135,7 +135,6 @@ void game_check_level(TetrisGame* game) {
     if (game->points == max_level_points) {
         ++game->level;
     }
-    SDL_Log("CHECK LEVEL: Level %d, Pontos %d, Max %d", game->level, game->points, max_level_points);
 }
 
 void game_fix_piece(TetrisGame* game) {
@@ -148,7 +147,6 @@ void game_fix_piece(TetrisGame* game) {
 
 int game_is_over(TetrisGame* game) {
     for (int y = 0; y < game->board->width; y++) {
-        SDL_Log("Test over: [%d, %d] = %d", 0, y, game->board->matrix[0][y]);
         if (game->board->matrix[0][y] != 0) {
             return 1;
         }

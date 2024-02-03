@@ -71,7 +71,6 @@ int main() {
                                 // Seta para baixo
                                 // acelerar peça
                                 acceleration = FPS / game->level;
-                                SDL_Log("Pressionado para baixo, aceleracao: %d", acceleration);
                             } else if (event.key.keysym.sym == SDLK_LEFT) {
                                 // Seta esquerda
                                 collision_with = piece_move(LEFT, game->board, game->current_piece);
@@ -83,7 +82,6 @@ int main() {
                             if (event.key.keysym.sym == SDLK_DOWN) {
                                 // restaurar aceleração
                                 acceleration = 1;
-                                SDL_Log("Soltou para baixo, aceleracao: %d", acceleration);
                             }
                         }
                     }
@@ -92,26 +90,15 @@ int main() {
                 int mod_operand = (int)((game->velocity / game->level) / acceleration);
                 if (loopCount % mod_operand == 0) {
                     collision_with = piece_move(DOWN, game->board, game->current_piece);
-                    // SDL_Log("Collision with: %d", collision_with);
                     if (collision_with == PIECE && game_is_over(game)) {
                         SDL_Log("GAME OVER");
                         gameover = 1;
                     } else if (collision_with == BOTTOM_WALL) {
                         // fixa a peça encaixando no fundo
                         game_fix_piece(game);
-                        SDL_Log("Pontos: %d", game->points);
-                        SDL_Log("Velocidade: %d", game->velocity);
-                        SDL_Log("Level: %d", game->level);
-                        SDL_Log("Aceleracao: %d", acceleration);
-                        SDL_Log("Loop count control: %d", mod_operand);
                     } else if (collision_with == PIECE) {
                         // fixa a peça
                         game_fix_piece(game);
-                        SDL_Log("Pontos: %d", game->points);
-                        SDL_Log("Velocidade: %d", game->velocity);
-                        SDL_Log("Level: %d", game->level);
-                        SDL_Log("Aceleracao: %d", acceleration);
-                        SDL_Log("Loop count control: %d", mod_operand);
                     }
                     loopCount = 0;
                 }
