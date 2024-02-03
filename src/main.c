@@ -48,6 +48,8 @@ int main() {
                                     // seleciona opção do menu para cima
                                 } else if (event.key.keysym.sym == SDLK_DOWN) {
                                     // seleciona opção do menu para baixo
+                                } else if (event.key.keysym.sym == SDLK_RETURN) {
+                                    // opção selecionada e enter pressionado
                                 }
                             }
                         }
@@ -68,7 +70,8 @@ int main() {
                             } else if (event.key.keysym.sym == SDLK_DOWN) {
                                 // Seta para baixo
                                 // acelerar peça
-                                acceleration = FPS;
+                                acceleration = FPS / game->level;
+                                SDL_Log("Pressionado para baixo, aceleracao: %d", acceleration);
                             } else if (event.key.keysym.sym == SDLK_LEFT) {
                                 // Seta esquerda
                                 collision_with = piece_move(LEFT, game->board, game->current_piece);
@@ -80,16 +83,14 @@ int main() {
                             if (event.key.keysym.sym == SDLK_DOWN) {
                                 // restaurar aceleração
                                 acceleration = 1;
+                                SDL_Log("Soltou para baixo, aceleracao: %d", acceleration);
                             }
                         }
                     }
                 }
-                
-                SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
-                SDL_RenderClear(game->renderer);
 
-                loopCount++;
-                if (loopCount % (int)(game->velocity / game->level / acceleration) == 0) {
+                int mod_operand = (int)((game->velocity / game->level) / acceleration);
+                if (loopCount % mod_operand == 0) {
                     collision_with = piece_move(DOWN, game->board, game->current_piece);
                     // SDL_Log("Collision with: %d", collision_with);
                     if (collision_with == PIECE && game_is_over(game)) {
@@ -99,24 +100,30 @@ int main() {
                         // fixa a peça encaixando no fundo
                         game_fix_piece(game);
                         SDL_Log("Pontos: %d", game->points);
+                        SDL_Log("Velocidade: %d", game->velocity);
                         SDL_Log("Level: %d", game->level);
                         SDL_Log("Aceleracao: %d", acceleration);
-                        SDL_Log("Loop count control: %d", (int)(game->velocity / game->level / acceleration));
+                        SDL_Log("Loop count control: %d", mod_operand);
                     } else if (collision_with == PIECE) {
                         // fixa a peça
                         game_fix_piece(game);
                         SDL_Log("Pontos: %d", game->points);
+                        SDL_Log("Velocidade: %d", game->velocity);
                         SDL_Log("Level: %d", game->level);
                         SDL_Log("Aceleracao: %d", acceleration);
-                        SDL_Log("Loop count control: %d", (int)(game->velocity / game->level / acceleration));
+                        SDL_Log("Loop count control: %d", mod_operand);
                     }
                     loopCount = 0;
                 }
 
                 board_add_piece(game->board, game->current_piece);
-                game_render(game);
 
+                SDL_SetRenderDrawColor(game->renderer, 0, 0, 0, 255);
+                SDL_RenderClear(game->renderer);
+                game_render(game);
                 SDL_RenderPresent(game->renderer);
+
+                loopCount++;
             }
 
             frameTime = SDL_GetTicks() - frameStart;

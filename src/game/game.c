@@ -131,11 +131,11 @@ void game_update_points(TetrisGame* game, int total_lines_removed) {
 }
 
 void game_check_level(TetrisGame* game) {
-    int next_level = game->level;
-    if (game->points == game->level * 1000) {
-        next_level++;
+    int max_level_points = game->level * 1000;
+    if (game->points == max_level_points) {
+        ++game->level;
     }
-    game->level = next_level;
+    SDL_Log("CHECK LEVEL: Level %d, Pontos %d, Max %d", game->level, game->points, max_level_points);
 }
 
 void game_fix_piece(TetrisGame* game) {
