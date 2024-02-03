@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# Bibliotecas SDL 2 instalada via Homebrew
+# Bibliotecas SDL 2 com
 # - SDL_Mixer
 # - SDL_TTF
 #
