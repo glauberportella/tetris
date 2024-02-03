@@ -1,7 +1,7 @@
 # Réplica de Tetris
 
 - Linguagem C
-- SDL
+- SDL 2 (com SDL_Mixer e SDL_ttf)
 
 ## Brincando com Tetris
 

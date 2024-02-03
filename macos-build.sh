@@ -1,4 +1,12 @@
 #!/bin/sh
+
+#
+# Bibliotecas SDL 2 instalada via Homebrew
+# - SDL_Mixer
+# - SDL_TTF
+#
+# Altere as opções -I para corresponder ao local de seus arquivos include da SDL
+#
 gcc src/core/board.c src/core/piece.c \
     src/game/game.c \
     src/main.c \
