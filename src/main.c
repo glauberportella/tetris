@@ -15,6 +15,9 @@
 #define DELAY_TIME 1000.0f/FPS
 
 int main() {
+    // semente aleatoria
+    srand((unsigned int)time(NULL));
+    
     TetrisGame* game = create_game();
     Uint32 frameStart, frameTime;
 

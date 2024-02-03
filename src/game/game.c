@@ -67,8 +67,7 @@ void game_play_music(TetrisGame* game) {
 }
 
 PieceType game_next_piece_type(TetrisGame* game) {
-    srand((unsigned int)time(NULL));
-    int random = (rand() % 6) + 1;
+    int random = rand() % 7;
     PieceType pieceType = (PieceType)random;
     return pieceType;
 }
