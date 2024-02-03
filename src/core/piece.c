@@ -183,20 +183,20 @@ Collision piece_move(MoveDirection direction, Board* board, Piece* piece) {
 
     switch (direction) {
         case UP:
-            // while (current != NULL) {
-            //     if (collision(board, current->x - 1, current->y) == TOP_WALL) {
-            //         collision_detected = TOP_WALL;
-            //         break;
-            //     }
-            //     current = current->next;
-            // }
-            // if (collision_detected == NO_COLLISION) {
-            //     current = piece->blocks;
-            //     while (current != NULL) {
-            //         current->x -= 1;
-            //         current = current->next;
-            //     }
-            // }
+            while (current != NULL) {
+                if (collision(board, current->x - 1, current->y) == TOP_WALL) {
+                    collision_detected = TOP_WALL;
+                    break;
+                }
+                current = current->next;
+            }
+            if (collision_detected == NO_COLLISION) {
+                current = piece->blocks;
+                while (current != NULL) {
+                    current->x -= 1;
+                    current = current->next;
+                }
+            }
             break;
         case DOWN:
             while (current != NULL) {

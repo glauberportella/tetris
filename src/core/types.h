@@ -26,7 +26,7 @@ typedef enum {
     TOP_WALL,
     LEFT_WALL,
     RIGHT_WALL,
-    BOTTOM_WALL,
+    BOTTOM_WALL
 } Collision;
 
 // Tipos de peças

@@ -143,5 +143,4 @@ void game_render(TetrisGame* game) {
             }
         }
     }
-    board_log(game->board);
 }
