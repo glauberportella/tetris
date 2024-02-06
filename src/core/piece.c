@@ -39,6 +39,25 @@ void piece_add_block(Piece* piece, int x, int y, int pivot) {
     }
 }
 
+Color piece_color(PieceType type) {
+    switch (type) {
+        case PIECE_1:
+            return (Color){ 0, 0, 205, 255 };
+        case PIECE_2:
+            return (Color){ 50, 205, 50, 255};
+        case PIECE_3:
+            return (Color){ 210, 105, 30, 155 };
+        case PIECE_4:
+            return (Color){ 128, 0, 128, 255};
+        case PIECE_5:
+            return (Color){ 220, 20, 60, 255 };
+        case PIECE_6:
+            return (Color){ 255, 215, 0, 255 };
+        case PIECE_7:
+            return (Color){ 32, 178, 170, 255 };
+    }
+}
+
 Piece* piece_create(PieceType type, Color color, int initial_x, int initial_y) {
     Piece* p = (Piece*)malloc(sizeof(Piece));
     p->color = color;

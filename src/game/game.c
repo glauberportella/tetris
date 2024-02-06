@@ -75,7 +75,7 @@ PieceType game_next_piece_type(TetrisGame* game) {
 Piece* game_create_current_piece(TetrisGame* game) {
     PieceType pieceType = game_next_piece_type(game);
     // color
-    Color color = { 255, 255, 0, 255 };
+    Color color = piece_color(pieceType);
     // position
     int x = 0;
     int y = (int)(game->board->width - 1) / 2; ;
@@ -83,44 +83,14 @@ Piece* game_create_current_piece(TetrisGame* game) {
 }
 
 void game_render(TetrisGame* game) {
-    int width = game->board->width;
-    int height = game->board->height;
-    int block_height = (int)(game->window_h / HEIGHT);
-    int block_width = (int)(game->window_w / WIDTH);
-    for (int x = 0; x < height; x++) {
-        for (int y = 0; y < width; y++) {
+    for (int x = 0; x < game->board->height; x++) {
+        for (int y = 0; y < game->board->width; y++) {
             if (game->board->matrix[x][y] == 1) {
                 // Peça atual descendo
-                SDL_Rect rect = { 
-                    y * block_width, 
-                    x * block_height, 
-                    block_height, 
-                    block_width
-                };
-                SDL_SetRenderDrawColor(
-                    game->renderer, 
-                    game->current_piece->color.r, 
-                    game->current_piece->color.g, 
-                    game->current_piece->color.b, 
-                    game->current_piece->color.a
-                );
-                SDL_RenderFillRect(game->renderer, &rect);
-            } else if (game->board->matrix[x][y] == 2) {
+                game_current_piece_render(game, x, y);
+            } else if (game->board->matrix[x][y] >= 2) {
                 // Peça fixada
-                SDL_Rect rect = { 
-                    y * block_width, 
-                    x * block_height, 
-                    block_height, 
-                    block_width
-                };
-                SDL_SetRenderDrawColor(
-                    game->renderer, 
-                    0,
-                    255,
-                    0, 
-                    255
-                );
-                SDL_RenderFillRect(game->renderer, &rect);
+                game_fix_piece_render(game, x, y);
             }
         }
     }
@@ -143,6 +113,82 @@ void game_fix_piece(TetrisGame* game) {
     game_update_points(game, removed_lines);
     game_check_level(game);
     game->current_piece = game_create_current_piece(game);
+}
+
+void game_current_piece_render(TetrisGame* game, int x, int y) {
+    int width = game->board->width;
+    int height = game->board->height;
+    int block_height = (int)(game->window_h / HEIGHT);
+    int block_width = (int)(game->window_w / WIDTH);
+
+    SDL_Rect rect = { 
+        y * block_width, 
+        x * block_height, 
+        block_height, 
+        block_width
+    };
+    SDL_SetRenderDrawColor(
+        game->renderer, 
+        game->current_piece->color.r, 
+        game->current_piece->color.g, 
+        game->current_piece->color.b, 
+        game->current_piece->color.a
+    );
+    SDL_RenderFillRect(game->renderer, &rect);
+
+    SDL_Rect border = {
+        y * block_width, 
+        x * block_height, 
+        block_height, 
+        block_width
+    };
+    SDL_SetRenderDrawColor(
+        game->renderer, 
+        20,
+        20,
+        20,
+        255
+    );
+    SDL_RenderDrawRect(game->renderer, &border);
+}
+
+void game_fix_piece_render(TetrisGame* game, int x, int y) {
+    int width = game->board->width;
+    int height = game->board->height;
+    int block_height = (int)(game->window_h / HEIGHT);
+    int block_width = (int)(game->window_w / WIDTH);
+
+    Color pieceColor = piece_color((PieceType)(game->board->matrix[x][y] - 2));
+
+    SDL_Rect rect = { 
+        y * block_width, 
+        x * block_height, 
+        block_height, 
+        block_width
+    };
+    SDL_SetRenderDrawColor(
+        game->renderer, 
+        pieceColor.r, 
+        pieceColor.g, 
+        pieceColor.b, 
+        pieceColor.a
+    );
+    SDL_RenderFillRect(game->renderer, &rect);
+
+    SDL_Rect border = {
+        y * block_width, 
+        x * block_height, 
+        block_height, 
+        block_width
+    };
+    SDL_SetRenderDrawColor(
+        game->renderer, 
+        20,
+        20,
+        20,
+        255
+    );
+    SDL_RenderDrawRect(game->renderer, &border);
 }
 
 int game_is_over(TetrisGame* game) {

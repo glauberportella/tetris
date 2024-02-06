@@ -32,6 +32,8 @@ Block* create_block(int x, int y, int pivot);
  */
 void piece_add_block(Piece* piece, int x, int y, int pivot);
 
+Color piece_color(PieceType type);
+
 /**
  * @brief Cria uma Piece do tipo informado
  * 

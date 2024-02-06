@@ -25,7 +25,7 @@ Board* board_create(int w, int h) {
 void board_init(Board* board) {
     for (int x = 0; x < board->height; ++x) {
         for (int y = 0; y < board->width; ++y) {
-            if (board->matrix[x][y] != 2) {
+            if (board->matrix[x][y] < 2) {
                 board->matrix[x][y] = 0; // 0 representa célula vazia
             }
         }
@@ -43,7 +43,7 @@ void board_add_piece(Board* board, Piece* piece) {
 void board_place_piece(Board* board, Piece* piece) {
     Block* current = piece->blocks;
     while (current != NULL) {
-        board->matrix[current->x][current->y] = 2;
+        board->matrix[current->x][current->y] = piece->type + 2;
         current = current->next;
     }
     piece_destroy(piece);
@@ -60,7 +60,7 @@ int board_clear_lines(Board* board) {
     for (int i = board->height - 1; i >= 0; --i) {
         int count = 0;
         for (int j = 0; j < board->width; ++j) {
-            if (board->matrix[i][j] == 2) {
+            if (board->matrix[i][j] >= 2) {
                 count++;
             }
         }
@@ -109,7 +109,7 @@ Collision collision(Board* board, int x, int y) {
     }
 
     // colisão com blocos fixados no tabuleiro
-    if (board->matrix[x][y] == 2) {
+    if (board->matrix[x][y] >= 2) {
         return PIECE;
     }
 
@@ -130,5 +130,5 @@ void board_log(Board* board) {
         }
         printf("\n");
     }
-    printf("\n===========END BOARD===============\n");
+    printf("\n===========END BOARD===========\n");
 }

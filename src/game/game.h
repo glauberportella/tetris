@@ -28,6 +28,7 @@ typedef struct {
     Board* board;
     Piece* current_piece;
     PieceType next_piece_type;
+
     int window_w;
     int window_h;
 
@@ -46,6 +47,8 @@ void game_update_points(TetrisGame* game, int total_lines_removed);
 void game_check_level(TetrisGame* game);
 void game_fix_piece(TetrisGame* game);
 int game_is_over(TetrisGame* game);
+void game_current_piece_render(TetrisGame* game, int x, int y);
+void game_fix_piece_render(TetrisGame* game, int x, int y);
 void destroy_game(TetrisGame* game);
 
 #endif

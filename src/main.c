@@ -96,9 +96,17 @@ int main() {
                     } else if (collision_with == BOTTOM_WALL) {
                         // fixa a peça encaixando no fundo
                         game_fix_piece(game);
+                        SDL_Log("===========================");
+                        SDL_Log("Level: %d", game->level);
+                        SDL_Log("Pontos: %d", game->points);
+                        SDL_Log("===========================");
                     } else if (collision_with == PIECE) {
                         // fixa a peça
                         game_fix_piece(game);
+                        SDL_Log("===========================");
+                        SDL_Log("Level: %d", game->level);
+                        SDL_Log("Pontos: %d", game->points);
+                        SDL_Log("===========================");
                     }
                     loopCount = 0;
                 }
