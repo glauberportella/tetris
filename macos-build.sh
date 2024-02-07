@@ -9,6 +9,7 @@
 #
 gcc src/core/board.c src/core/piece.c \
     src/game/game.c \
+    src/ui/widget.c \
     src/main.c \
     -o bin/tetris \
     -I/opt/homebrew/Cellar/sdl2/2.28.5/include/SDL2/ \
